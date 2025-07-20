@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+
+
+.section-padding {
+  padding: 4rem 8rem;
+}
+
+@media (max-width: 1024px) {
+  .section-padding {
+    padding: 4rem 4rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .section-padding {
+    padding: 4rem 1rem;
+  }
+}
