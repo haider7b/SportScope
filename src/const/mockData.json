@@ -1,0 +1,86 @@
+{
+    "competition": {
+        "id": 2021,
+        "name": "Premier League",
+        "area": {
+            "name": "England"
+        },
+        "code": "PL",
+        "season": {
+            "startDate": "2024-08-10",
+            "endDate": "2025-05-20"
+        }
+    },
+    "teams": [
+        {
+            "id": 66,
+            "name": "Manchester United FC",
+            "tla": "MUN",
+            "crest": "https://crests.football-data.org/66.svg",
+            "founded": 1878,
+            "venue": "Old Trafford",
+            "website": "https://www.manutd.com"
+        },
+        {
+            "id": 65,
+            "name": "Manchester City FC",
+            "tla": "MCI",
+            "crest": "https://crests.football-data.org/65.svg",
+            "founded": 1880,
+            "venue": "Etihad Stadium",
+            "website": "https://www.mancity.com"
+        }
+    ],
+    "standings": [
+        {
+            "position": 1,
+            "team": "Manchester City FC",
+            "playedGames": 38,
+            "won": 29,
+            "draw": 6,
+            "lost": 3,
+            "points": 93,
+            "goalDifference": 61
+        },
+        {
+            "position": 2,
+            "team": "Manchester United FC",
+            "playedGames": 38,
+            "won": 25,
+            "draw": 8,
+            "lost": 5,
+            "points": 83,
+            "goalDifference": 45
+        }
+    ],
+    "matches": [
+        {
+            "id": 1,
+            "utcDate": "2025-03-12T16:30:00Z",
+            "status": "FINISHED",
+            "matchday": 28,
+            "homeTeam": "Manchester United FC",
+            "awayTeam": "Manchester City FC",
+            "score": {
+                "fullTime": {
+                    "home": 2,
+                    "away": 1
+                }
+            }
+        },
+        {
+            "id": 2,
+            "utcDate": "2025-04-05T18:45:00Z",
+            "status": "SCHEDULED",
+            "matchday": 31,
+            "homeTeam": "Manchester City FC",
+            "awayTeam": "Arsenal FC",
+            "score": {
+                "fullTime": {
+                    "home": null,
+                    "away": null
+                }
+            }
+        }
+    ]
+}

@@ -1,4 +1,4 @@
-import{darkMode,TeamsContext} from "../../const/index"
+import{darkMode,TeamsContext,teams} from "../../const/index"
 import { useEffect,useContext } from "react";
 import Slider from "../../components/Slider";
 import SearchFotTeam from "../../components/SearchFotTeam";
@@ -8,7 +8,7 @@ import  gsap  from 'gsap';
 export default function Home() {
 
   const darkModeState = useContext(darkMode)
-  const {teams} = useContext(TeamsContext)
+  //const {teams} =[...teams]// useContext(TeamsContext)
   
 
 

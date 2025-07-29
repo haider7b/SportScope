@@ -91,7 +91,7 @@ function moveTheSlider(newIndex,newDirection) {
 
 
     return (
-        <div  className='w-full relative overflow-hidden bg-amber-300 '
+        <div  className='w-full relative overflow-hidden  '
         style={{height:`${boxHeight+(showNavigation?70:0)}px`}}
         >
             <div id={sliderIdd}
@@ -131,9 +131,9 @@ function moveTheSlider(newIndex,newDirection) {
                                 })
                         }}
                     >
-                        <div className={`${moreInfo ? "h-[70%]" : "h-full"} bg-gray-400  rounded-lg overflow-hidden`}>
-                            {item.img &&
-                                <img src={ item.img}
+                        <div className={`${moreInfo ? "h-[70%]" : "h-full"} bg-gray-400  rounded-lg overflow-hidden p-4`}>
+                            {item.crest &&
+                                <img src={ item.crest}
                                 alert={item.name ? item.name : "undefined"}
                                 className='w-full '>   
                                 </img>

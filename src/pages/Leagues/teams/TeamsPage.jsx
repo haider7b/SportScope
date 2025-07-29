@@ -5,7 +5,7 @@ import SearchFotTeam from "../../../components/SearchFotTeam";
 import {showWhatContext} from "../../../const/index"
 import TeamsSlider from "./TeamsSlider";
 import Team from "./Team";
-import Player from "./Player";
+//import Player from "./Player";
 
 
 
@@ -16,8 +16,11 @@ import Player from "./Player";
 export default function TeamsPage() {
 
     const darkModeState = useContext(darkMode)
-    const {teams} = useContext(TeamsContext)
+   // const {teams} = useContext(TeamsContext)
     const showWhat = useContext(showWhatContext)
+    const { teams, loading, error } = useContext(TeamsContext);
+    
+        
     
 
     useEffect(()=>{
@@ -27,6 +30,9 @@ export default function TeamsPage() {
             }
         )
     },[darkModeState.darkModeState])
+
+    if (loading) return <p>Loading teams...</p>;
+    if (error) return <p>Error: {error}</p>;
     
     return (
             <section id="Teams" className=" w-full ">
@@ -43,7 +49,7 @@ export default function TeamsPage() {
                             </h1>
                             <TeamsSlider
                             sliderIdd={"all-teams-slider"}
-                            list={teams}
+                            list={teams.teams}
                             gap={20} //in px
                             boxWidth={250}// in px
                             boxHeight={250} // in px
@@ -58,11 +64,11 @@ export default function TeamsPage() {
                         <Team />
                     </>
                     :
-                    showWhat.showWhatE.state==="show-player"?
-                    <>
-                        <Player/>
-                    </>
-                    :
+                    // showWhat.showWhatE.state==="show-player"?
+                    // <>
+                    //     <Player/>
+                    // </>
+                    // :
                     ""}
                 </div>
             </section>

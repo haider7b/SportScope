@@ -1,22 +1,21 @@
-import React,{ useReducer, useState, useEffect } from 'react'
+import { useReducer, useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Loader from "./components/Loader";
 import './App.css'
 import Home from './pages/home/Home';
-import TeamsPage from './pages/Leagues/teams/TeamsPage';
+//import TeamsPage from './pages/Leagues/teams/TeamsPage';
 import Leagues from './pages/Leagues/Leagues';
 import NavBar from "./components/NavBar"
 import MatchesPage from './pages/Matches/MatchesPage';
 import NewsPage from './pages/News/NewsPage';
-
+import TestHome from "./pages/testPage/TestHome";
 
 // eslint-disable-next-line no-unused-vars
-import {darkMode,TeamsContext,teams} from './const/index'
+import {darkMode} from './const/index'
 import Footer from './components/footer';
 
 
 
-const initialTeams = [...teams]
 
 //const initialState =0
 const initialMode = {
@@ -42,15 +41,7 @@ const initialMode = {
 // }
 
 
-const teamReducer = (state,action) => {
-  if(action.type === 'addTeam'){
-    return [...state,action.payload]
-  }else if(action.type === 'deleteTeam'){
-    return state.filter((team) => team.id !== action.payload)
-  }else{
-    return state
-  }
-}
+
 
 const modeReducer = (state,action) => {
   if(state.isDarkMode||action==='darkMode'){
@@ -79,7 +70,7 @@ function App() {
   //const [count,dispatch] = useReducer(reducer,initialState)
   const [mode,modeDispatch] = useReducer(modeReducer,initialMode)
 
-  const [teams,teamDispatch] = useReducer(teamReducer,initialTeams)
+  
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -102,14 +93,15 @@ function App() {
     
     <darkMode.Provider value={{darkModeState:mode,darkModeDispatch:modeDispatch}}>
       <NavBar />
-      <TeamsContext.Provider value={{teams,teamDispatch}} >
+      
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Leagues" element={<Leagues />} />
           <Route path="/News" element={<NewsPage />} />
           <Route path="/Matches" element={<MatchesPage />} />
+          <Route path="/Teams" element={<TestHome />} />
         </Routes>
-      </TeamsContext.Provider>
+      
       <Footer />
     </darkMode.Provider>
   )

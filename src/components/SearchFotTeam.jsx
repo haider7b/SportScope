@@ -1,6 +1,6 @@
 import { useEffect,useContext, useState } from "react";
 import  gsap  from 'gsap';
-import{darkMode,TeamsContext} from "../const/index.js"
+import{darkMode,TeamsContext,teams} from "../const/index.js"
 import { IoSearch } from "react-icons/io5";
 import { IoCloseSharp } from "react-icons/io5";
 export default function SearchFotTeam() {
@@ -8,7 +8,7 @@ export default function SearchFotTeam() {
     const darkModeState = useContext(darkMode)
     const [inputValue, setInputValue] = useState('')
     const [searchResults, setSearchResults] = useState([])
-    const {teams} = useContext(TeamsContext)
+    //const {teams} = useContext(TeamsContext)
     
     useEffect(() => {
         if(inputValue===""){
@@ -19,7 +19,7 @@ export default function SearchFotTeam() {
             team.name.toLowerCase().includes(inputValue.toLowerCase())
         );
         setSearchResults(filteredTeams);
-    }, [inputValue, teams]);
+    }, [inputValue]);
 
 
     useEffect(()=>{

@@ -9,8 +9,10 @@ import {
 } from '../utils/index.js'
 
 
+
+export const apiKey = '020a451ec83841babc18fbcda0c0225b'
 export const webName = 'SportScope'
-export const navLinks = ['Home', 'Leagues', 'News', 'Matches']
+export const navLinks = ['Home', 'Leagues', 'News', 'Matches', "Teams"]
 export const contactsLinks = [
     {
         name: 'Github',
@@ -35,6 +37,8 @@ export const darkMode = React.createContext()
 
 export const showWhatContext = React.createContext()
 export const TeamsContext = React.createContext()
+export const MatchesContext =React.createContext();
+export const LeaguesContext =React.createContext();
 
 const player = {
     name: "Cristiano Ronaldo",
@@ -224,89 +228,145 @@ export const SwathAmericanLeagues = EuropeanLeagues
 export const northAmericanLeagues = EuropeanLeagues
 
 
+//https://www.thesportsdb.com/api/v1/json/123/all_leagues.php
+
+
+
+
+
 export const newsList = [
     {
-        title: "Real Madrid advance to the Champions League final" ,
+        title: "Real Madrid advance to the Champions League final",
         description: "Real Madrid defeated Barcelona in the semi final 3-0 and going to meet Bayer in the final",
         img: CristianoRonaldo,
         League: "Champions League",
     },
     {
-        title: "Manchester City secure a lat win against Liverpool" ,
+        title: "Manchester City secure a lat win against Liverpool",
         description: "Manchester City defeated Liverpool in the premier league and tack the lead in the league with 90 point and 6 point ahead of Liverpool",
         img: CristianoRonaldo,
         League: "Premier League",
     },
     {
-        title: "Real Madrid advance to the Champions League final" ,
+        title: "Real Madrid advance to the Champions League final",
         description: "Real Madrid defeated Barcelona in the semi final 3-0 and going to meet Bayer in the final",
         img: CristianoRonaldo,
         League: "Champions League",
     },
     {
-        title: "Manchester City secure a lat win against Liverpool" ,
+        title: "Manchester City secure a lat win against Liverpool",
         description: "Manchester City defeated Liverpool in the premier league and tack the lead in the league with 90 point and 6 point ahead of Liverpool",
         img: CristianoRonaldo,
         League: "Premier League",
     },
     {
-        title: "Real Madrid advance to the Champions League final" ,
+        title: "Real Madrid advance to the Champions League final",
         description: "Real Madrid defeated Barcelona in the semi final 3-0 and going to meet Bayer in the final",
         img: CristianoRonaldo,
         League: "Champions League",
     },
     {
-        title: "Manchester City secure a lat win against Liverpool" ,
+        title: "Manchester City secure a lat win against Liverpool",
         description: "Manchester City defeated Liverpool in the premier league and tack the lead in the league with 90 point and 6 point ahead of Liverpool",
         img: CristianoRonaldo,
         League: "Premier League",
     },
     {
-        title: "Real Madrid advance to the Champions League final" ,
+        title: "Real Madrid advance to the Champions League final",
         description: "Real Madrid defeated Barcelona in the semi final 3-0 and going to meet Bayer in the final",
         img: CristianoRonaldo,
         League: "Champions League",
     },
     {
-        title: "Manchester City secure a lat win against Liverpool" ,
+        title: "Manchester City secure a lat win against Liverpool",
         description: "Manchester City defeated Liverpool in the premier league and tack the lead in the league with 90 point and 6 point ahead of Liverpool",
         img: CristianoRonaldo,
         League: "Premier League",
     },
     {
-        title: "Real Madrid advance to the Champions League final" ,
+        title: "Real Madrid advance to the Champions League final",
         description: "Real Madrid defeated Barcelona in the semi final 3-0 and going to meet Bayer in the final",
         img: CristianoRonaldo,
         League: "Champions League",
     },
     {
-        title: "Manchester City secure a lat win against Liverpool" ,
+        title: "Manchester City secure a lat win against Liverpool",
         description: "Manchester City defeated Liverpool in the premier league and tack the lead in the league with 90 point and 6 point ahead of Liverpool",
         img: CristianoRonaldo,
         League: "Premier League",
     },
     {
-        title: "Real Madrid advance to the Champions League final" ,
+        title: "Real Madrid advance to the Champions League final",
         description: "Real Madrid defeated Barcelona in the semi final 3-0 and going to meet Bayer in the final",
         img: CristianoRonaldo,
         League: "Champions League",
     },
     {
-        title: "Manchester City secure a lat win against Liverpool" ,
+        title: "Manchester City secure a lat win against Liverpool",
         description: "Manchester City defeated Liverpool in the premier league and tack the lead in the league with 90 point and 6 point ahead of Liverpool",
         img: CristianoRonaldo,
         League: "Premier League",
     },
     {
-        title: "Real Madrid advance to the Champions League final" ,
+        title: "Real Madrid advance to the Champions League final",
         description: "Real Madrid defeated Barcelona in the semi final 3-0 and going to meet Bayer in the final",
         img: CristianoRonaldo,
         League: "Champions League",
     },
     {
-        title: "Manchester City secure a lat win against Liverpool" ,
+        title: "Manchester City secure a lat win against Liverpool",
         description: "Manchester City defeated Liverpool in the premier league and tack the lead in the league with 90 point and 6 point ahead of Liverpool",
         img: CristianoRonaldo,
         League: "Premier League",
     },
 ]
+
+
+
+export const lg = {
+    "leagues": [{
+        "idLeague": "4328",
+        "strLeague": "English Premier League",
+        "strSport": "Soccer"
+    }, {
+        "idLeague": "4329",
+        "strLeague": "English League Championship",
+        "strSport": "Soccer"
+    }, {
+        "idLeague": "4330",
+        "strLeague": "Scottish Premier League",
+        "strSport": "Soccer"
+    }, {
+        "idLeague": "4331",
+        "strLeague": "German Bundesliga",
+        "strSport": "Soccer"
+    }, {
+        "idLeague": "4332",
+        "strLeague": "Italian Serie A",
+        "strSport": "Soccer"
+    }, {
+        "idLeague": "4334",
+        "strLeague": "French Ligue 1",
+        "strSport": "Soccer"
+    }, {
+        "idLeague": "4335",
+        "strLeague": "Spanish La Liga",
+        "strSport": "Soccer"
+    }, {
+        "idLeague": "4336",
+        "strLeague": "Greek Superleague Greece",
+        "strSport": "Soccer"
+    }, {
+        "idLeague": "4337",
+        "strLeague": "Dutch Eredivisie",
+        "strSport": "Soccer"
+    }, {
+        "idLeague": "4338",
+        "strLeague": "Belgian Pro League",
+        "strSport": "Soccer"
+    }]
+}
+
+
+
+//export const TeamsContextTest = createContext();
