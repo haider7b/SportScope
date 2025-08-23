@@ -1,93 +1,146 @@
-import{darkMode,matches} from "../../const/index"
-import { useEffect,useContext,useState } from "react";
-import  gsap  from 'gsap';
+import { darkMode, contentContext,apiKey } from "../../const/index"
+import React, { useEffect, useContext, useState } from "react";
+import gsap from 'gsap';
 import Matches from "../../components/Matches";
+import { IoIosArrowDown } from "react-icons/io";
 
-
-//http://api.football-data.org/v4/teams/759/matches
-
-const links=["yesterday","today","tomorrow"]
-
-export default function MatchesPage() {
+function MatchesPage() {
 
     const darkModeState = useContext(darkMode)
+    const content = useContext(contentContext)
+    const leagues = content.contentState.leagues
+    const [active, setActive] = useState(0)
+    const [showOption ,setShowOption] = useState(false)
 
-    const [active,setActive] = useState(0)
-
-
-    const handleClick = (index)=>{
+    const handleClick = (index) => {
         setActive(index)
-
-        for(let i=0;i<links.length;i++){
-        gsap.to(`#link${i} `,{
-            duration:0.5,
-            color:i===index?"#155dfc":"#777"
-        })
-        }
-        gsap.to(`#link0 div`,{
-            left:index*100+"%",
-            duration:0.5
-        })
-
-        gsap.to("#matches-slider",{
-            left:-index*100+"%",
-            duration:0.5
-        })
-
+        setShowOption(false)
     }
-    useEffect(()=>{
-        gsap.to("#matches",{
-            backgroundColor:darkModeState.darkModeState.backGrandColor,
-            color:darkModeState.darkModeState.mainTextColor
-            }
+    useEffect(() => {
+        gsap.to("#matches", {
+            backgroundColor: darkModeState.darkModeState.backGrandColor,
+            color: darkModeState.darkModeState.mainTextColor
+        }
         )
-    },[darkModeState.darkModeState])
-    
+    }, [darkModeState.darkModeState])
+
+
+    useEffect(()=>{
+        gsap.to("#leagues",{
+            display:showOption?"flex":"none",
+            duration:0.3
+        })
+        gsap.to("#arrowDown",{
+            rotate:showOption?180:0,
+            duration:0.3
+        })
+    },[showOption])
+
+
+    useEffect(() => {
+        if(active>leagues.length-1)return;
+        const target = leagues[active].name.replace(" ", "_");
+
+        const fetchMatch = async () => {
+            const cachedMatches = localStorage.getItem(target);
+            if (cachedMatches && JSON.parse(cachedMatches).length > 0) {
+                content.contentDispatch({ type: "SET_ALL_MATCHES", payload: { id: target, value: [...(JSON.parse(cachedMatches))] } })
+                return;
+            }
+            try {
+                const response = await fetch(`https://corsproxy.io/?http://api.football-data.org/v4/competitions/${leagues[active].id}/matches?matchday=1`, {
+                    headers: {
+                        "X-Auth-Token": apiKey,
+                    },
+                });
+                const data = await response.json();
+                const formatted = data.matches.map((match) => ({
+                    id: match.id,
+                    homeTeam: match.homeTeam.name,
+                    awayTeam: match.awayTeam.name,
+                    date: match.utcDate.slice(0, 10),
+                    time: match.utcDate.slice(11, 16),
+                    competition: match.competition.name,
+                    homeTeamScore: match.score.fullTime.home,
+                    awayTeamScore: match.score.fullTime.away,
+                    winner: match.score.winner
+                }));
+                localStorage.setItem(target, JSON.stringify(formatted));
+                content.contentDispatch({ type: "SET_ALL_MATCHES", payload: { id: target, value: [...formatted] } });
+            } catch (err) {
+                console.error("Error fetching matches:", err.message);
+            }
+        }
+        fetchMatch()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ 
+        content.contentState.leagues,active
+    ])  
+
     return (
         <section id="matches" className="section-padding w-full ">
-            <div>
+            <div > 
                 <h1 className="text-2xl font-bold my-4 text-[26px]">Matches</h1>
-                <div className="flex  items-center my-6 gap-4 relative">
-                    <div className="w-full h-[2px] bg-[#ccc] absolute left-0 bottom-0"></div>
+                <div className="w-full h-[1px] bg-[#ccc] my-4"></div>
+                <div className=" w-fit bg-[#ccc] h-[55px] my-8 px-4
+                flex items-center justify-between relative rounded-md">
+                    <div className=" font-bold text-center w-full z-40">
+                        {active<leagues.length?leagues[active].name.toUpperCase():""}
+                    </div>
+                    <div className="hover:bg-[#afacac] rounded-full w-[30px] h-[30px] flex items-center justify-center"
+                    role="button"
+                    onClick={()=>{setShowOption(()=>(!showOption))}}
+                    >
+                        <IoIosArrowDown id="arrowDown"></IoIosArrowDown>
+                    </div>
+                    <div 
+                    className="w-full z-30 bg-[#ccc] hidden text-[14px]
+                    flex-col absolute top-[40px] pt-[20px] left-0 rounded-md"
+                    id="leagues"
+                    >
                     {
-                        links.map((link,index)=>(
-                            <div 
-                            key={link}
-                            id={"link"+index}
-                            className={`py-4 cursor-pointer font-bold   relative 
-                            ${active===index?"text-[#155dfc]":"text-[#777]"}
-                            `}
-                            onClick={()=>handleClick(index)}>
-                                {link.toUpperCase()}
-                                {index==0&&
-                                    <div className="z-30  w-full h-[3px] bg-[#155dfc] absolute left-0 bottom-0">
-                                    </div>}
-                                
-                            </div>))
+                        leagues.map((league, index) => (
+                            active!==index&&
+                            <div
+                                key={league.name}
+                                id={"league" + index}
+                                className={`py-2 cursor-pointer font-bold text-center 
+                                relative text-[#777]   hover:bg-[#afacac]`}
+                                onClick={() => handleClick(index)}>
+                                {league.name.toUpperCase()}
+                            </div>
+                        ))
                     }
-                    
-                </div>
-                <div className="w-full overflow-x-hidden relative"
-                style={{height:`${(matches.length+1)*55+50}px`}}
-                >
-                    <div
-                    id="matches-slider"
-                    style={{width:`${links.length*100}%`}}
-                    className="flex items-center absolute top-0 left-0">
-                        <div id={`${links[0]}`} className="w-1/3">
-                            <Matches matches={matches}/>
-                        </div>
-                        <div id={`${links[1]}`} className="w-1/3">
-                            <Matches matches={matches}/>
-                        </div>
-                        <div id={`${links[2]}`}className="w-1/3">
-                            <Matches matches={matches}/>
-                        </div>
                     </div>
                 </div>
-                
-                
+                <div className="w-full   relative  h- [400px] ">
+                    <div
+                        id="matches-slider"
+                        style={{ width: `100%` }}
+                        className="flex flex-col items-center ">
+                        {
+                            leagues.map((league,ind) => (
+                                <div 
+                                key={league.name} 
+                                id={`${league.name}`} 
+                                style={{ width: `100%` }}
+                                className={`${active===ind?"block":"hidden"}`}
+                                >
+                                    {active===ind&&
+                                    <Matches
+                                    t
+                                    id={league.name&&league.name.replace(" ", "_")}
+                                    type="leagues"
+                                    ind={ind} 
+                                    />}
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
             </div>
         </section>
     )
 }
+
+export default React.memo(MatchesPage)

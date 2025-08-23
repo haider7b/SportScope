@@ -1,16 +1,14 @@
-import{darkMode,TeamsContext,teams} from "../../const/index"
+import{darkMode} from "../../const/index"
 import { useEffect,useContext } from "react";
-import Slider from "../../components/Slider";
 import SearchFotTeam from "../../components/SearchFotTeam";
 import  gsap  from 'gsap';
+import HomeSlider from "./HomeSlider";
 
 
 export default function Home() {
 
   const darkModeState = useContext(darkMode)
-  //const {teams} =[...teams]// useContext(TeamsContext)
   
-
 
   useEffect(()=>{
     gsap.to("#home",{
@@ -20,6 +18,7 @@ export default function Home() {
     )
   },[darkModeState.darkModeState])
 
+  
 
   return (
     <section id="home" className="section-padding w-full ">
@@ -29,31 +28,31 @@ export default function Home() {
           </div>
           <div className="w-full min:h-[300px]">
             <h1 className="text-2xl font-bold  mb-6">
-              popular Leagues
+              popular competitions
             </h1>
-            <Slider
+            <HomeSlider
+            type={"leagues"}
             sliderIdd={"home-leagues-slider"}
-            const list={teams}
             gap={5} //in px
             boxWidth={250}// in px
             boxHeight={250} // in px
             moreInfo={false}
             >
-            </Slider>
+            </HomeSlider>
           </div>
           <div className="w-full mt-8 min:h-[250px]">
             <h1 className="text-2xl font-bold  mb-6">
               popular Teams
             </h1>
-            <Slider
+            <HomeSlider
+            type={"teams"}
             sliderIdd={"home-teams-slider"}
-            list={teams}
             gap={20} //in px
             boxWidth={200}// in px
             boxHeight={200} // in px
             moreInfo={true}
             >
-            </Slider>
+            </HomeSlider>
           </div>
       </div>
     </section>

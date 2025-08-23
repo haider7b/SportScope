@@ -1,7 +1,6 @@
 import { useRef, useEffect } from "react";
 import gsap from 'gsap';
-import { IoChevronForward } from "react-icons/io5";
-import { IoChevronBack } from "react-icons/io5";
+
 
 
 export default function Slider(

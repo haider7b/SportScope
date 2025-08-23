@@ -1,11 +1,10 @@
 import { useContext} from "react";
-//import gsap from 'gsap';
 import {showWhatContext} from "../../../const/index"
 
 export default function Player() {
 
     const showWhat = useContext(showWhatContext)
-  return (
+    return (
     <>
         <div className="flex flex-col justify-center items-center ">
             <div className="w-[200px] lg:w-[150px] rounded-full  overflow-hidden">
@@ -28,5 +27,5 @@ export default function Player() {
         </div>
         {showWhat.state}
     </>
-  )
+    )
 }

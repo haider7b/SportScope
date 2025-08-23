@@ -2,12 +2,11 @@ import { useRef, useEffect ,useContext} from "react";
 import gsap from 'gsap';
 import { IoChevronForward } from "react-icons/io5";
 import { IoChevronBack } from "react-icons/io5";
-import {showWhatContext} from "../../../const/index"
+import {contentContext} from "../../../const/index"
 
 export default function TeamsSlider(
     { 
-        sliderIdd, 
-        list, 
+        sliderIdd,  
         gap,
         boxWidth,
         boxHeight,
@@ -15,79 +14,70 @@ export default function TeamsSlider(
         showNavigation 
     }) {
 
-    
-
     const movingRef = useRef({ index: 0, direction: "left" });
-    const showWhat = useContext(showWhatContext)
+    const content = useContext(contentContext)
+    const list =  content.contentState.teams;
+    const listLength = list?list.length:0;
 
-useEffect(() => {
-    const intervalId = setInterval(() => {
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+
+            const temp = movingRef.current;
+
+            if (temp.index - 1 > listLength - Math.floor(window.innerWidth / boxWidth)) {
+                temp.direction = "right";
+            } else if (temp.index === 0) {
+                temp.direction = "left";
+            }
+            if (temp.direction === "left") {
+                temp.index += 1;
+            } else {
+                temp.index -= 1;
+            }
+
+            gsap.to("#" + sliderIdd, {
+                left: `-${temp.index * boxWidth}px`,
+                duration: 1.5,
+                delay: 0.5
+            });
+
+            if(showNavigation){            
+                gsap.to("#sliderDots"+sliderIdd,{
+                    left: `-${temp.index * 30}px`,
+                    duration:1,
+                    delay: 1
+                })
+                for(let ind=0;ind<listLength;ind++) {
+                    gsap.to("#dot"+ind+sliderIdd,{
+                        backgroundColor:ind===temp.index?"white":"transparent",
+                        duration:0.5,
+                        delay: 0.7
+                    })    
+                }
+            }
+        }, 4500);
+        return () => clearInterval(intervalId);
+    }, [list, listLength, boxWidth, sliderIdd,showNavigation]);
+
+
+    function moveTheSlider(newIndex,newDirection) {
+
         const temp = movingRef.current;
-
-        if (temp.index - 1 > list.length - Math.floor(window.innerWidth / boxWidth)) {
-            temp.direction = "right";
-        } else if (temp.index === 0) {
-            temp.direction = "left";
-        }
-        if (temp.direction === "left") {
-            temp.index += 1;
-        } else {
-            temp.index -= 1;
-        }
-
+        temp.direction = newDirection;
+        temp.index = newIndex;
         gsap.to("#" + sliderIdd, {
             left: `-${temp.index * boxWidth}px`,
             duration: 1.5,
             delay: 0.5
         });
-
-        
-
-        if(showNavigation){
-            
-            gsap.to("#sliderDots"+sliderIdd,{
-                left: `-${temp.index * 30}px`,
-                duration:1,
-                delay: 1
-            })
-
-            for(let ind=0;ind<list.length;ind++) {
-                gsap.to("#dot"+ind+sliderIdd,{
-                    backgroundColor:ind===temp.index?"white":"transparent",
-                    duration:0.5,
-                    delay: 0.7
-                })    
-            }
-        }
-
-    }, 4500);
-
-    return () => clearInterval(intervalId);
-}, [list, boxWidth, sliderIdd,showNavigation]);
-
-
-
-
-function moveTheSlider(newIndex,newDirection) {
-
-    const temp = movingRef.current;
-    temp.direction = newDirection;
-    temp.index = newIndex;
-    gsap.to("#" + sliderIdd, {
-        left: `-${temp.index * boxWidth}px`,
-        duration: 1.5,
-        delay: 0.5
-    });
     
-    gsap.to("#sliderDots"+sliderIdd,{
-        left: `-${temp.index * 30}px`,
-        duration:1,
-        delay: 1
-    })
+        gsap.to("#sliderDots"+sliderIdd,{
+            left: `-${temp.index * 30}px`,
+            duration:1,
+            delay: 1
+        })
+    }
 
-
-    
-}
 
 
     return (
@@ -97,7 +87,7 @@ function moveTheSlider(newIndex,newDirection) {
             <div id={sliderIdd}
             className={`flex justify-center absolute top-0 left-0
             items-center gap-[${gap}]  `}
-            style={{ width: `${list.length * boxWidth}px`, gap: `${gap}px`
+            style={{ width: `${listLength * boxWidth}px`, gap: `${gap}px`
                     ,height:`${boxHeight}px`
             }}
             >
@@ -107,30 +97,14 @@ function moveTheSlider(newIndex,newDirection) {
                     fex justify-center items-center cursor-pointer
                     `}
                         style={{ width: `${boxWidth}px`, height: `${boxHeight}px` }}
-
                         onClick={() => {
-                            showWhat.showWhatEDispatch(
-                                
-                                showWhat.showWhatE.state==="leagues"?{
-                                    type:"all-teams",
-                                    leagueId:ind,
-                                    leagueName:item.name?item.name:"unknown",
-                                    teamId:null,
-                                    playerId:null,
-                                    item:item,
-                                    prevItem:[],
-
-                                }:{
-                                type:"team",
-                                leagueId:showWhat.showWhatE.leagueId,
-                                leagueName:showWhat.showWhatE.leagueName,
-                                teamId:ind,
-                                playerId:null,
-                                item:item,
-                                prevItem:[showWhat.showWhatE.item],
+                            content.contentDispatch(
+                                {
+                                    type:"ADD_TEAM",
+                                    payload:item,
                                 })
-                        }}
-                    >
+                            content.contentDispatch({type:"SET_STATUS",payload:"team"})
+                        }}>
                         <div className={`${moreInfo ? "h-[70%]" : "h-full"} bg-gray-400  rounded-lg overflow-hidden p-4`}>
                             {item.crest &&
                                 <img src={ item.crest}
@@ -138,7 +112,6 @@ function moveTheSlider(newIndex,newDirection) {
                                 className='w-full '>   
                                 </img>
                             }
-                            
                         </div>
                         {moreInfo && <div>
                             <h2 className='font-extrabold'>{item.name}</h2>
@@ -165,7 +138,7 @@ function moveTheSlider(newIndex,newDirection) {
                         <div 
                         id={"sliderDots"+sliderIdd}
                         className="flex z-40 gap-2 justify-center items-center absolute  h-full "
-                        style={{width:`${list.length*30+(list.length-1)*8}px`}}
+                        style={{width:`${listLength*30+(listLength-1)*8}px`}}
                         > 
                             {list.map((__, ind) => (
                                 <div 
@@ -182,7 +155,6 @@ function moveTheSlider(newIndex,newDirection) {
                             ))}
                         </div>
                     </div>
-                    
                     <button 
                     className="cursor-pointer w-[25px] h-[25px] flex 
                     justify-center items-center hover:bg-amber-200 rounded-full text-2xl"
