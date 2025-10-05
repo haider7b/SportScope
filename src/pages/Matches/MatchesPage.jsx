@@ -81,18 +81,24 @@ function MatchesPage() {
         <section id="matches" className="section-padding w-full ">
             <div > 
                 <h1 className="text-2xl font-bold my-4 text-[26px]">Matches</h1>
+                {/* the underline */}
                 <div className="w-full h-[1px] bg-[#ccc] my-4"></div>
-                <div className=" w-fit bg-[#ccc] h-[55px] my-8 px-4
-                flex items-center justify-between relative rounded-md">
-                    <div className=" font-bold text-center w-full z-40">
+                {/* options div */}
+                <div className="w-[200px] md:w-[250px] lg:w-[350px] bg-[#ccc] h-[55px] 
+                my-8 px-4 flex items-center  relative rounded-md">
+                    {/* name */}
+                    <div className=" font-bold w-[90%] z-40 text-[14px] md:text-[16px]">
                         {active<leagues.length?leagues[active].name.toUpperCase():""}
                     </div>
-                    <div className="hover:bg-[#afacac] rounded-full w-[30px] h-[30px] flex items-center justify-center"
+                    {/* icon */}
+                    <div className="hover:bg-[#afacac] rounded-full 
+                    w-[30px] h-[30px] flex items-center justify-center"
                     role="button"
                     onClick={()=>{setShowOption(()=>(!showOption))}}
                     >
                         <IoIosArrowDown id="arrowDown"></IoIosArrowDown>
                     </div>
+                    {/* options list */}
                     <div 
                     className="w-full z-30 bg-[#ccc] hidden text-[14px]
                     flex-col absolute top-[40px] pt-[20px] left-0 rounded-md"

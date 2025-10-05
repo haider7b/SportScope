@@ -93,7 +93,7 @@ export default function HomeSlider(
     if(!list) return <>Error</>
     
     return (
-        <div  className='w-full relative overflow-hidden bg-amber-300 '
+        <div  className='w-full relative overflow-hidden'
         style={{height:`${boxHeight}px`}}
         >
             <div id={sliderIdd}
@@ -105,8 +105,9 @@ export default function HomeSlider(
             >
                 {listLength>0?   list.map((item,ind) => (
                     <div key={item.name.replace(" ", "-")+ind}
-                        className={` h-[${boxHeight}]  rounded-lg 
+                    className={` h-[${boxHeight}]  rounded-lg 
                     fex justify-center items-center cursor-pointer
+                    bg-gradient-to-t from-white via-gray-100 to-gray-200
                     `}
                     style={{ width: `${boxWidth}px`, height: `${boxHeight}px` }}
                     onClick={() => {handleClick(ind)}}
@@ -118,7 +119,7 @@ export default function HomeSlider(
                                 alert={item.shortName ? item.shortName :item.name?item.name: "undefined"}
                                 className='h-full '
                             ></img>}
-                            {type==="leagues" &&<h2 className=" font-bold text-2xl ">{item.name}</h2>}
+                            {type==="leagues" &&<h2 className=" font-bold text-2xl text-center ">{item.name}</h2>}
                         </div>
                         {moreInfo && <div>
                             {item.name &&

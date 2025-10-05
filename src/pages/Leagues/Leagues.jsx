@@ -60,7 +60,7 @@ export default function Leagues() {
                             content.contentState.leagues.map(League=>(
                                 <div key={League.name} 
                                 onClick={() => {handleClick(League)}}
-                                className="min-h-[200px] bg-gray-400 
+                                className="min-h-[200px] bg-gradient-to-t from-white via-gray-100 to-gray-200
                                 flex justify-center items-center rounded-2xl hover:-translate-y-2.5
                                 transition-all duration-300 cursor-pointer shadow-md">
                                     <h2 className="text-2xl text-center font-bold my-4 "> 
